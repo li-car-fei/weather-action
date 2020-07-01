@@ -142,7 +142,7 @@ async function renderTemplate() {
 //renderTemplate();
 
 // 5. 发送邮件
-async function sendNodeMail() {
+async function sendNodeMail(SendTo) {
     // HTML 页面内容，通过 await 等待模板引擎渲染完毕后，再往下执行代码
     const html = await renderTemplate();
     // console.log(html);
@@ -159,9 +159,9 @@ async function sendNodeMail() {
 
     // 设置电子邮件数据
     let mailOptions = {
-        from: '"起床了" <carfied@163.com>',  // 自己的邮箱用户名
-        to: "1073490398@qq.com",                          // 收件人列表
-        subject: "天気",              // 邮件标题
+        from: '"藤原拓鞋" <carfied@163.com>',  // 自己的邮箱用户名
+        to: SendTo,                          // 收件人列表
+        subject: "清晨问候",              // 邮件标题
         html: html                                // 设置邮件为 html 内容
     };
     // 发送邮件
@@ -173,12 +173,6 @@ async function sendNodeMail() {
         console.log("邮件发送成功", info);
     });
 }
-sendNodeMail();
+sendNodeMail("1073490398@qq.com");
 
-// 6. 定时每天 5时20分14秒发送邮件给女（男）朋友
-// 6.1 创建定时器任务
-// schedule.scheduleJob("14 20 5 * * *", function() {
-//     // 时间到了，执行发送邮件的任务
-//     sendNodeMail();
-//     console.log("定时任务的邮件发送成功");
-// });
+
