@@ -193,9 +193,10 @@ async function sendNodeMail(SendTo) {
     transporter.sendMail(mailOptions, (error, info = {}) => {
         if (error) {
             console.log(error);
-            sendNodeMail(); //再次发送
+            //sendNodeMail(); //再次发送
+        } else {
+            console.log("邮件发送成功", info);
         }
-        console.log("邮件发送成功", info);
     });
 }
 
@@ -238,9 +239,10 @@ async function sendNodeMail2(SendTo) {
     transporter.sendMail(mailOptions, (error, info = {}) => {
         if (error) {
             console.log(error);
-            sendNodeMail(); //再次发送
+            //sendNodeMail(); //再次发送
+        } else {
+            console.log("邮件发送成功", info);
         }
-        console.log("邮件发送成功", info);
     });
 }
 
