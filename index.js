@@ -15,12 +15,12 @@ const schedule = require("node-schedule");
 
 const { SMTP } = process.env
 
-// 1.0 计算爱人认识的天数
-function getDayData() {
+// 1.0 计算认识的天数
+function getDayData(date) {
     return new Promise((resolve, reject) => {
         // 现在的时间
         // const today = new Date();
-        const meet = new Date("2018-09-01");
+        const meet = new Date(date);                // "2018-09-01"
 
         const timezone = 8; //目标时区时间，东八区
         var offset_GMT = new Date().getTimezoneOffset(); // 本地时间和格林威治的时间差，单位为分钟
@@ -117,10 +117,10 @@ function getOneData() {
 }
 // getOneData();
 
-// 4.0 通过模板引起替换 HTML 的数据
+// 4.0 通过模板1引起替换 HTML 的数据
 async function renderTemplate() {
     // 获取 日期
-    const dayData = await getDayData();
+    const dayData = await getDayData("2018-09-01");
     // 获取 墨迹天气数据
     const mojiData = await getMojiData();
     // 获取 One 的数据
@@ -139,7 +139,32 @@ async function renderTemplate() {
         resolve(html);
     });
 }
-//renderTemplate();
+
+
+// 4.1 通过模板2引起替换 HTML 的数据
+async function renderTemplate2() {
+    // 获取 日期
+    const dayData = await getDayData("2015-09-01");
+    // 获取 墨迹天气数据
+    const mojiData = await getMojiData();
+    // 获取 One 的数据
+    const oneData = await getOneData();
+    //console.log(dayData);
+    //console.log(mojiData);
+    //console.log(oneData);
+    // 2. 所有数据都获取成功的时候，才进行模板引擎数据的替换
+    return new Promise((resolve, reject) => {
+        const html = template(path.join(__dirname, "./weather2.html"), {
+            dayData,
+            mojiData,
+            oneData
+        });
+        //console.log(html);
+        resolve(html);
+    });
+}
+
+
 
 // 5. 发送邮件
 async function sendNodeMail(SendTo) {
@@ -173,6 +198,52 @@ async function sendNodeMail(SendTo) {
         console.log("邮件发送成功", info);
     });
 }
-sendNodeMail("1073490398@qq.com");
+
+
+sendNodeMail("1073490398@qq.com");              // 我的
+// sendNodeMail("1269231889@qq.com");              // 钟宇豪
+// sendNodeMail("782274248@qq.com");               // 崔继耀
+// sendNodeMail("1937416609@qq.com");              // 康堂飞
+// sendNodeMail("3174544628@qq.com");              // 张祝潼
+// sendNodeMail("1391614019@qq.com");              // 马煜祥
+// sendNodeMail("574120486@qq.com");               // 覃航
+// sendNodeMail("470836287@qq.com");               // 叶鸿生
+
+
+
+// 5.1 发送邮件2
+async function sendNodeMail2(SendTo) {
+    // HTML 页面内容，通过 await 等待模板引擎渲染完毕后，再往下执行代码
+    const html = await renderTemplate2();
+    // console.log(html);
+    // 使用默认SMTP传输，创建可重用邮箱对象
+    let transporter = nodemailer.createTransport({
+        service: '163',
+        port: 465,
+        secureConnection: true, // 开启加密协议，需要使用 465 端口号
+        auth: {
+            user: "carfied@163.com", // 自己的邮箱用户名
+            pass: SMTP                 // 自己的邮箱授权密码
+        }
+    });
+
+    // 设置电子邮件数据
+    let mailOptions = {
+        from: '"藤原拓鞋" <carfied@163.com>',  // 自己的邮箱用户名
+        to: SendTo,                          // 收件人列表
+        subject: "清晨问候",              // 邮件标题
+        html: html                                // 设置邮件为 html 内容
+    };
+    // 发送邮件
+    transporter.sendMail(mailOptions, (error, info = {}) => {
+        if (error) {
+            console.log(error);
+            sendNodeMail(); //再次发送
+        }
+        console.log("邮件发送成功", info);
+    });
+}
+
+sendNodeMail2("1073490398@qq.com");              // 我的
 
 
