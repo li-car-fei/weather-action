@@ -159,7 +159,7 @@ async function sendNodeMail() {
 
     // 设置电子邮件数据
     let mailOptions = {
-        from: '"起床了" 藤原拓鞋',  // 自己的邮箱用户名
+        from: '"起床了" <carfied@163.com>',  // 自己的邮箱用户名
         to: "1073490398@qq.com",                          // 收件人列表
         subject: "天気",              // 邮件标题
         html: html                                // 设置邮件为 html 内容
