@@ -1,0 +1,31 @@
+name: Send Weather Mail
+
+on:
+  push:
+  schedule:
+    - cron: "0 23 * * *"
+
+jobs:
+  build:
+    name: My Send
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "10.x"
+
+      - name: "Install NPM dependencies"
+        run: npm install nodemailer
+          npm install request superagent cheerio art-template node-schedule dotenv-extended
+
+      - name: Run
+        run: node index.js
+        env:
+          SMTP: ${{ secrets.MAIL_PASSWORD }}
