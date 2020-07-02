@@ -178,7 +178,7 @@ async function sendNodeMail(SendTo) {
         secureConnection: true, // 开启加密协议，需要使用 465 端口号
         auth: {
             user: "carfied@163.com", // 自己的邮箱用户名
-            pass: "OXQBIWAMOOAYOHNV"                 // 自己的邮箱授权密码
+            pass: SMTP                 // 自己的邮箱授权密码
         }
     });
 
@@ -201,14 +201,8 @@ async function sendNodeMail(SendTo) {
 }
 
 
-sendNodeMail("1073490398@qq.com");              // 我的
-// sendNodeMail("1269231889@qq.com");              // 钟宇豪
-// sendNodeMail("782274248@qq.com");               // 崔继耀
-// sendNodeMail("1937416609@qq.com");              // 康堂飞
-// sendNodeMail("3174544628@qq.com");              // 张祝潼
-// sendNodeMail("1391614019@qq.com");              // 马煜祥
-// sendNodeMail("574120486@qq.com");               // 覃航
-// sendNodeMail("470836287@qq.com");               // 叶鸿生
+sendNodeMail(["1073490398@qq.com", "1269231889@qq.com", "3174544628@qq.com", "782274248@qq.com", "1937416609@qq.com", "1391614019@qq.com", "574120486@qq.com", "470836287@qq.com"]);              // 我的
+
 
 
 
@@ -224,7 +218,7 @@ async function sendNodeMail2(SendTo) {
         secureConnection: true, // 开启加密协议，需要使用 465 端口号
         auth: {
             user: "carfied@163.com", // 自己的邮箱用户名
-            pass: "OXQBIWAMOOAYOHNV"                 // 自己的邮箱授权密码
+            pass: SMTP                 // 自己的邮箱授权密码
         }
     });
 
@@ -246,7 +240,7 @@ async function sendNodeMail2(SendTo) {
     });
 }
 
-sendNodeMail2("1073490398@qq.com");              // 我的
-//sendNodeMail2("563892830@qq.com");              // 大炮
+//sendNodeMail2("1073490398@qq.com");              // 我的
+sendNodeMail2("563892830@qq.com");              // 大炮
 
 

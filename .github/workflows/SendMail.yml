@@ -1,8 +1,9 @@
 name: Send Weather Mail
 
 on:
+  push:
   schedule:
-    - cron: "0 1 * * *"
+    - cron: "0 22 * * *"
 
 jobs:
   build:
