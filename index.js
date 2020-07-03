@@ -241,6 +241,6 @@ async function sendNodeMail2(SendTo) {
 }
 
 //sendNodeMail2("1073490398@qq.com");              // 我的
-sendNodeMail2("563892830@qq.com");              // 大炮
+sendNodeMail2(["563892830@qq.com", "798253123@qq.com"]);
 
 
